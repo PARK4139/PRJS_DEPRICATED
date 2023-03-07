@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>VOICE TO TEXT</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/addons/p5.sound.min.js"></script>
+    <script src="p5.speech.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <meta charset="utf-8" />
+  </head>
+  <body> 
+    <div class="voice_memo_one_slash_two">       
+    </div> 
+    <script> 
+//___________________________________________________________________________________________________  audio permission
+var AudioContext;
+var audioContext;
+window.onload = function() {
+    navigator.mediaDevices.getUserMedia({ audio: true }).then(() => {
+        AudioContext = window.AudioContext || window.webkitAudioContext;
+        audioContext = new AudioContext();
+    }).catch(e => {
+        console.error(`Audio permissions denied: ${e}`);
+    });
+}
+//___________________________________________________________________________________________________  p5.js  TTS initialiation
+let talk;
+let recSpeak; 
+function preload(){
+  talk = new p5.Speech();
+} 
+function setup() { 
+  let lang = 'ko';
+  recSpeak = new p5.SpeechRec(lang, results);
+  recSpeak.start(true, false);
+}
+function results(){
+  if(recSpeak.resultValue){
+    createP(recSpeak.resultString);
+    // text(recSpeak.resultString,10,y);
+    talk.setVoice(); 
+    talk.speak(recSpeak.resultString);
+  }
+}
+//___________________________________________________________________________________________________  만들고 든 생각
+// 내가 설정을 부족하게 해서 그런진 몰라도..
+//..... NAVER CLOVER를 대체 하기엔 너무 저성능.....
+// NAVER CLOVER 를 다운받아서 쓰자
+    </script> 
+  </body>
+</html>
+
+      
